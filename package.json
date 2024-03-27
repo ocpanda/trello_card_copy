@@ -1,7 +1,7 @@
 {
-  "name": "trello_title_copy",
+  "name": "trello_card_copy",
   "version": "1.0.0",
-  "description": "make trello hyperlink by card button with title",
+  "description": "This extension allows you to easily copy the title and link of a Trello detail card.",
   "main": "index.js",
   "repository": "https://github.com/ocpanda",
   "author": "Black",
