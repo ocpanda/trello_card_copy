@@ -1,1 +1,3 @@
 This Chrome extension adds a convenient button to Trello cards that allows you to quickly copy the card's title and link. With this extension, managing and sharing Trello card information becomes a breeze, enhancing your productivity and collaboration efforts. Whether you're coordinating with team members, tracking project progress, or simply organizing your tasks, this extension streamlines the process by making it easy to capture and disseminate important card details with just a click.
+
+此 Chrome 擴充功能為 Trello 卡片新增了一個方便的按鈕，可讓您快速複製卡片的標題和連結。 借助此擴展，管理和共享 Trello 卡片資訊變得輕而易舉，從而提高您的工作效率和協作能力。 無論您是與團隊成員協調、追蹤專案進度，還是只是組織任務，此擴充功能都可以簡化流程，只需單擊即可輕鬆捕獲和傳播重要的卡片詳細資訊。
