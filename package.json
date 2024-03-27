@@ -1,0 +1,9 @@
+{
+  "name": "trello_title_copy",
+  "version": "1.0.0",
+  "description": "make trello hyperlink by card button with title",
+  "main": "index.js",
+  "repository": "https://github.com/ocpanda",
+  "author": "Black",
+  "license": "MIT"
+}

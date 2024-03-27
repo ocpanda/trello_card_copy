@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "trello_title_copy",
+  "description": "make trello hyperlink by card button with title",
+  "version": "1.0.0",
+  "icons": {
+    "128": "128.png"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [ "https://trello.com/*" ],
+      "js" : [
+        "index.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "clipboardWrite"
+  ]
+}
