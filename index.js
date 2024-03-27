@@ -1,3 +1,15 @@
+const copyToClipboard = (message, text, element) => {
+  navigator.clipboard.writeText(text).then(function () {
+    element.innerHTML = 'Successfully copied'
+    setTimeout(() => {
+      element.innerHTML = `Copy ${message}`
+    }, 3000)
+    console.log(`Successfully copied ${message} to clipboard`);
+  }).catch(function (error) {
+    console.error('Could not copy text: ', error);
+  });
+}
+
 class Trello {
   #target
   #customNodes
@@ -95,11 +107,7 @@ class TrelloTitleCopy extends Trello {
       const title = titleNode.querySelector('h2').innerHTML
 
       // copy to clipboard
-      navigator.clipboard.writeText(title).then(function () {
-        console.log('Successfully copied Title to clipboard');
-      }).catch(function (error) {
-        console.error('Could not copy text: ', error);
-      });
+      copyToClipboard('title', title, copyButton)
 
       e.preventDefault()
     }
@@ -139,11 +147,7 @@ class TrelloLinkCopy extends Trello {
       link = link.join('/')
 
       // copy to clipboard
-      navigator.clipboard.writeText(link).then(function () {
-        console.log('Successfully copied Link to clipboard');
-      }).catch(function (error) {
-        console.error('Could not copy text: ', error);
-      });
+      copyToClipboard('link', link, copyButton)
 
       e.preventDefault()
     }
