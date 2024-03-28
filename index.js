@@ -1,13 +1,23 @@
-const copyToClipboard = (message, text, element) => {
-  navigator.clipboard.writeText(text).then(function () {
-    element.innerHTML = 'Successfully copied'
-    setTimeout(() => {
-      element.innerHTML = `Copy ${message}`
-    }, 3000)
-    console.log(`Successfully copied ${message} to clipboard`);
-  }).catch(function (error) {
-    console.error('Could not copy text: ', error);
-  });
+async function clipboardCopy(title, url) {
+  return new Promise((resolve, reject) => {
+    try {
+      const text = new Blob([title], { type: 'text/plain' })
+      const href = new Blob([`<a href="${url}">${title}</a>`], {
+        type: 'text/html'
+      });
+
+      const item = new window.ClipboardItem({
+        'text/plain': Promise.resolve(text),
+        'text/html': Promise.resolve(href)
+      })
+      navigator.clipboard.write([item]).then(() => {
+        resolve(true)
+      })
+    } catch (error) {
+      console.error('Could not copy text: ', error)
+      reject(false)
+    }
+  })
 }
 
 class Trello {
@@ -75,46 +85,6 @@ class Trello {
   }
 }
 
-class TrelloTitleCopy extends Trello {
-  #prop
-
-  constructor() {
-    super()
-    this.#prop = 'titleCopy'
-    this.listeners()
-    this.installCustom(this.#prop, this.#makeNode)
-  }
-
-  listeners() {
-    this.detailCardListener(this, this.#adaptTarget)
-  }
-
-  #adaptTarget() {
-    this.adaption(this.#prop, document.querySelector('.window-sidebar'))
-  }
-
-  #makeNode(prop) {
-    if (document.querySelector(`.${prop}`)) return undefined
-
-    const copyButton = document.createElement('a')
-    copyButton.className = `button-link ${prop}`
-    copyButton.innerHTML = 'Copy title'
-
-    copyButton.onclick = function copyWithHyperlink(e) {
-      // make title
-      const titleNode = document.querySelector('.window-title')
-      if (!titleNode) return
-      const title = titleNode.querySelector('h2').innerHTML
-
-      // copy to clipboard
-      copyToClipboard('title', title, copyButton)
-
-      e.preventDefault()
-    }
-    return copyButton
-  }
-}
-
 class TrelloLinkCopy extends Trello {
   #prop
 
@@ -138,16 +108,28 @@ class TrelloLinkCopy extends Trello {
 
     const copyButton = document.createElement('a')
     copyButton.className = `button-link ${prop}`
-    copyButton.innerHTML = 'Copy link'
+    copyButton.innerHTML = 'Copy hyperlink'
 
-    copyButton.onclick = function copyWithHyperlink(e) {
+    copyButton.onclick = async function copyWithHyperlink(e) {
+      // make title
+      const titleNode = document.querySelector('.window-title')
+      if (!titleNode) return
+      const title = titleNode.querySelector('h2').innerHTML
+
       // make link
       let link = window.location.href.split('/')
-      if (link[link.length - 1].match(/\?/g)) link.pop()
+      if (link[link.length - 1].match(/[\?%]/g)) link.pop()
       link = link.join('/')
 
       // copy to clipboard
-      copyToClipboard('link', link, copyButton)
+      const isSuccess = await clipboardCopy(title, link, copyButton)
+
+      if (isSuccess) {
+        copyButton.innerHTML = 'Successfully copied'
+        setTimeout(() => {
+          copyButton.innerHTML = 'Copy hyperlink'
+        }, 3000)
+      }
 
       e.preventDefault()
     }
@@ -156,6 +138,5 @@ class TrelloLinkCopy extends Trello {
 }
 
 ; (function () {
-  new TrelloTitleCopy()
   new TrelloLinkCopy()
 })()
