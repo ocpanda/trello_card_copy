@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "trello_card_copy",
   "description": "This extension allows you to easily copy the title and link of a Trello detail card.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icons": {
     "128": "128.png",
     "16": "16.png",
