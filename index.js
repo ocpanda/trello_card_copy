@@ -143,7 +143,7 @@ class TrelloLinkCopy extends Trello {
     copyButton.onclick = function copyWithHyperlink(e) {
       // make link
       let link = window.location.href.split('/')
-      link.pop()
+      if (link[link.length - 1].match(/\?/g)) link.pop()
       link = link.join('/')
 
       // copy to clipboard
