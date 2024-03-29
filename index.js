@@ -1,4 +1,4 @@
-async function clipboardCopy(title, url) {
+async function hyperlinkCopy(title, url) {
   return new Promise((resolve, reject) => {
     try {
       const text = new Blob([title], { type: 'text/plain' })
@@ -122,7 +122,7 @@ class TrelloLinkCopy extends Trello {
       link = link.join('/')
 
       // copy to clipboard
-      const isSuccess = await clipboardCopy(title, link, copyButton)
+      const isSuccess = await hyperlinkCopy(title, link)
 
       if (isSuccess) {
         copyButton.innerHTML = 'Successfully copied'
